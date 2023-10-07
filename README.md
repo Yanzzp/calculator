@@ -7,13 +7,15 @@ github repository: [Yanzzp/calculator (github.com)](https://github.com/Yanzzp/ca
 This is a web calculator implemented using Python's Flask framework and HTML, CSS and JS. HTML language can help me realize the appearance of this calculator, CSS can decorate this calculator, and implement the logic of the calculator through the Flask framework.
 
 ## 2. Self information
-| **The Link Your Class**                    | Estimated Time (minutes) |
-| :----------------------------------------- | :----------------------- |
-| The Link of Requirement of This Assignment | 10                       |
-| The Aim of This Assignment                 | Implement a calculator   |
-| MU STU ID and FZU STU ID                   | 21124566_832101119       |
+
+| **The Link Your Class**                    | https://bbs.csdn.net/ssynkqtd-04                          |
+| :----------------------------------------- | :-------------------------------------------------------- |
+| The Link of Requirement of This Assignment | https://blog.csdn.net/zpy737296/article/details/133647527 |
+| The Aim of This Assignment                 | Implement a calculator                                    |
+| MU STU ID and FZU STU ID                   | 21124566_832101119                                        |
 
 ## 3. PSP
+
 | **Personal Software Process Stages**    | Estimated Time (minutes) | Actual Time (minutes) |
 | :-------------------------------------- | :----------------------- | :-------------------- |
 | Planning                                | 10                       | 8                     |
@@ -131,3 +133,4 @@ if __name__ == '__main__':
 </html>
 
 ```
+
