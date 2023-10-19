@@ -1,50 +1,47 @@
-# from flask import Flask, request, render_template
-#
-# app = Flask(__name__)
-#
-# @app.route('/', methods=['GET', 'POST'])
-# def calculator():
-#     result = ""
-#     if request.method == 'POST':
-#         num1 = float(request.form['num1'])
-#         num2 = float(request.form['num2'])
-#         operation = request.form['operation']
-#
-#         if operation == 'add':
-#             result = num1 + num2
-#         elif operation == 'subtract':
-#             result = num1 - num2
-#         elif operation == 'multiply':
-#             result = num1 * num2
-#         elif operation == 'divide':
-#             if num2 != 0:
-#                 result = num1 / num2
-#             else:
-#                 result = "除数不能为零"
-#
-#     return render_template('calculator.html', result=result)
-#
-# if __name__ == '__main__':
-#     app.run(debug=True)
-
 from flask import Flask, request, render_template
+from flask_sqlalchemy import SQLAlchemy
 import math
 
 app = Flask(__name__)
+app.config['SQLALCHEMY_DATABASE_URI'] = (
+    'mysql+pymysql://YanServer:123test@1.12.68.118:3306/test2'
+)
+db = SQLAlchemy(app)
+
+
+class Calculation(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    expression = db.Column(db.String(255))
+    result = db.Column(db.String(255))
+
 
 @app.route('/')
 def calculator():
-    return render_template('calculator2.html', result="")
+    calculations = Calculation.query.all()  # 获取所有计算记录
+    return render_template('calculator2.html', result="", calculations=calculations)
+
 
 @app.route('/calculate', methods=['POST'])
 def calculate():
     expression = request.form['expression']
+    calculations = Calculation.query.all()  # 获取所有计算记录
     try:
-        result = eval(expression, {"__builtins__": None}, {"math": math})
-        return render_template('calculator2.html', result=result, expression=expression)
+        result_val = eval(expression, {"__builtins__": None}, {"math": math})
+
+        # 创建一个新的数据库记录并保存
+        calculation = Calculation(expression=expression, result=str(result_val))
+        db.session.add(calculation)
+        db.session.commit()
+
+        return render_template('calculator2.html', result=result_val, expression=expression, calculations=calculations)
     except Exception as e:
         error_message = "Invalid input or calculation error: " + str(e)
-        return render_template('calculator2.html', error_message=error_message)
+        return render_template('calculator2.html', error_message=error_message, calculations=calculations)
+
+
+
+with app.app_context():
+    db.create_all()
 
 if __name__ == '__main__':
     app.run(debug=True)

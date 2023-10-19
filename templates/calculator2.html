@@ -5,14 +5,20 @@
 </head>
 <body>
     <h1>Calculator</h1>
-    <form method="POST" action="/calculate">
-        <input type="text" name="expression" value="{{ expression }}">
-        <button type="submit">Calculate</button>
-        <button type="button" onclick="clearInput()">Clear</button>
-        <p>{{ error_message }}</p>
-        <h2>Result: {{ result }}</h2>
-    </form>
+        <form method="POST" action="/calculate">
+            <input type="text" name="expression" value="{{ expression }}">
+            <button type="submit">Calculate</button>
+            <button type="button" onclick="clearInput()">Clear</button>
+            <p>{{ error_message }}</p>
+            <h2>Result: {{ result }}</h2>
+        </form>
     <br>
+    <h3>Previous Calculations:</h3>
+    <ul>
+        {% for calculation in calculations %}
+            <li>{{ calculation.expression }} = {{ calculation.result }}</li>
+        {% endfor %}
+    </ul>
     <h3>Basic Operations:</h3>
     <p>Examples: 2+3, 5-2, 4*6, 8/4</p>
     <h3>Advanced Operations:</h3>
