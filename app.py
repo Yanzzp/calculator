@@ -4,7 +4,7 @@ import math
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = (
-    'mysql+pymysql://YanServer:123test@1.12.68.118:3306/test2'
+    'mysql+pymysql://YanServer:123test@yanzzp.xyz:3306/test2'
 )
 db = SQLAlchemy(app)
 
@@ -26,7 +26,9 @@ def calculate():
     expression = request.form['expression']
     calculations = Calculation.query.all()  # 获取所有计算记录
     try:
-        result_val = eval(expression, {"__builtins__": None}, {"math": math})
+        # 提供math库中的三角函数
+        safe_globals = {"sin": math.sin, "cos": math.cos, "tan": math.tan}
+        result_val = eval(expression, {"__builtins__": None}, safe_globals)
 
         # 创建一个新的数据库记录并保存
         calculation = Calculation(expression=expression, result=str(result_val))
